@@ -1,5 +1,5 @@
-import { Stack, useGlobalSearchParams, useRouter } from "expo-router";
-import { useCallback, useState } from "react";
+import { Stack, useGlobalSearchParams, useRouter } from 'expo-router';
+import { useCallback, useState } from 'react';
 import {
     View,
     Text,
@@ -10,27 +10,27 @@ import {
     Share,
     Alert,
     StyleSheet,
-} from "react-native";
+} from 'react-native';
 
-import {
-    MeditationTopDisplay,
-    About,
-    Footer,
-    Tabs,
-} from "../../components";
+import { MeditationTopDisplay, About, Footer, Tabs } from '../../components';
 import ScreenHeaderBtn from '../../components/ScreenHeaderBtn';
-import { COLORS, icons, SIZES } from "../../constants";
-import useFetch from "../../hook/useFetch";
+import { COLORS, icons, SIZES } from '../../constants';
+import useFetch from '../../hook/useFetch';
 
-const tabs = ["Про", "Інструкції"];
+const tabs = ['About', 'Instructions'];
 
 const MeditationDetails = () => {
     const params = useGlobalSearchParams();
     const id = params.id;
-    const { data, isLoading, error, refetch } = useFetch("search", {
+    const { data, isLoading, error, refetch } = useFetch('search', {
         query: id,
     });
     const meditationItem = useFetch().getItemById(parseInt(id, 10));
+    console.log('meditationItem', meditationItem);
+    console.log('MeditationTopDisplay', MeditationTopDisplay);
+    console.log('About', About);
+    console.log('Footer', Footer);
+    console.log('Tabs', Tabs);
 
     const [activeTab, setActiveTab] = useState(tabs[0]);
     const [refreshing, setRefreshing] = useState(false);
@@ -42,24 +42,19 @@ const MeditationDetails = () => {
     }, []);
 
     const displayTabContent = () => {
-        if (activeTab === "Про") {
-            return (
-                <About
-                    title={meditationItem.title}
-                    info={meditationItem.description ?? "Дані не надано"}
-                />
-            );
-        } else if (activeTab === "Інструкції") {
+        if (activeTab === 'About') {
+            return <About title={meditationItem.title} info={meditationItem.description ?? 'Data not available'} />;
+        } else if (activeTab === 'Instructions') {
             return (
                 <View style={styles.specificsContainer}>
-                    <Text style={styles.specificsTitle}>Інструкції:</Text>
+                    <Text style={styles.specificsTitle}>Instructions:</Text>
                     <View style={styles.pointsContainer}>
-                    {(meditationItem.instructions ?? ["Н/Д"]).map((item, index) => (
-                        <View style={styles.pointWrapper} key={index}>
-                        <View style={styles.pointDot} />
-                        <Text style={styles.pointText}>{item}</Text>
-                        </View>
-                    ))}
+                        {(meditationItem.instructions ?? ['No Data']).map((item, index) => (
+                            <View style={styles.pointWrapper} key={index}>
+                                <View style={styles.pointDot} />
+                                <Text style={styles.pointText}>{item}</Text>
+                            </View>
+                        ))}
                     </View>
                 </View>
             );
@@ -70,7 +65,7 @@ const MeditationDetails = () => {
     const onShare = async () => {
         try {
             const result = await Share.share({
-                message: `Перегляньте цю медитацію: ${meditationItem.title} (${meditationItem.duration})`,
+                message: `View this meditation: ${meditationItem.title} (${meditationItem.duration})`,
             });
             if (result.action === Share.dismissedAction) {
                 // Обмін скасовано
@@ -78,40 +73,33 @@ const MeditationDetails = () => {
         } catch (error) {
             Alert.alert(error.message);
         }
-        };
-
+    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScreenHeaderBtn detailPage={true} handleShare={onShare} />
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                }
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             >
                 {isLoading ? (
                     <ActivityIndicator size="large" color={COLORS.primary} />
                 ) : error ? (
-                    <Text>Щось пішло не так</Text>
+                    <Text>Something went wrong</Text>
                 ) : !meditationItem || meditationItem.length === 0 ? (
-                    <Text>Дані не доступні</Text>
+                    <Text>Data not available</Text>
                 ) : (
                     <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
-                    <MeditationTopDisplay
-                        meditationImage={meditationItem.image}
-                        meditationTitle={meditationItem.title}
-                        duration={meditationItem.duration}
-                        target={meditationItem.target}
-                    />
+                        <MeditationTopDisplay
+                            meditationImage={meditationItem.image}
+                            meditationTitle={meditationItem.title}
+                            duration={meditationItem.duration}
+                            target={meditationItem.target}
+                        />
 
-                    <Tabs
-                        tabs={tabs}
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
-                    />
+                        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
-                    {displayTabContent()}
+                        {displayTabContent()}
                     </View>
                 )}
             </ScrollView>
@@ -119,7 +107,7 @@ const MeditationDetails = () => {
             <Footer data={meditationItem} />
         </SafeAreaView>
     );
-}
+};
 
 const styles = StyleSheet.create({
     specificsContainer: {
@@ -127,15 +115,15 @@ const styles = StyleSheet.create({
     },
     specificsTitle: {
         fontSize: SIZES.large,
-        fontWeight: "bold",
+        fontWeight: 'bold',
         marginBottom: SIZES.small,
     },
     pointsContainer: {
         marginTop: SIZES.small,
     },
     pointWrapper: {
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
         marginBottom: SIZES.small / 2,
     },
     pointDot: {

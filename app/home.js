@@ -1,30 +1,33 @@
-import { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
-import { AsyncStorage } from "@react-native-async-storage/async-storage"
+import { useEffect, useState } from 'react';
+import { SafeAreaView, ScrollView, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { ScreenHeaderBtn } from "../components/ScreenHeaderBtn"
-import { Welcome } from "../components/Welcome"
-import { PopularMeditation } from "../components/PopularMeditation"
-import { DailyMeditation } from "../components/DailyMeditation"
-import { DailyQuote } from "../components/DailyQuote"
+import ScreenHeaderBtn from '../components/ScreenHeaderBtn';
+import Welcome from '../components/Welcome';
+import PopularMeditation from '../components/PopularMeditation';
+import DailyMeditation from '../components/DailyMeditation';
+import DailyQuote from '../components/DailyQuote';
 
-import { COLORS, SIZES } from "../constants/theme";
+import { COLORS, SIZES } from '../constants/theme';
 
 const Home = () => {
     const [userDetails, setUserDetails] = useState(null);
+    console.log('0', ScreenHeaderBtn);
 
     useEffect(() => {
+        console.log(1);
+
         loadUserDetails();
     }, []);
 
     const loadUserDetails = async () => {
-        const user = await AsyncStorage.getItem("userDetails");
-        console.log("user", user);
+        const user = await AsyncStorage.getItem('userDetails');
+        console.log('user', user);
         setUserDetails(user);
     };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
-            <ScreenHeaderBtn/>
+            <ScreenHeaderBtn />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View
                     style={{

@@ -1,22 +1,21 @@
-import { View, Text, StyleSheet } from "react-native";
-import { COLORS, FONT, SIZES } from "../constants/theme";
+import { View, Text, StyleSheet } from 'react-native';
+import { COLORS, FONT, SIZES } from '../constants/theme';
 
 const Welcome = ({ userDetails }) => {
-    console.log("userDetails", userDetails?.userName);
+    console.log('welcome userDetails', userDetails?.userName);
     return (
-        w>
+        <View>
             <View style={styles.container} testID="styles.container">
-                <Text style={styles.userName}>Привіт {userDetails?.userName}!</Text>
-                <Text style={styles.welcomeMessage}>Знайдіть свою ідеальну медитацію</Text>
+                <Text style={styles.userName}>Hi {userDetails?.userName}!</Text>
+                <Text style={styles.welcomeMessage}> Find your meditation</Text>
             </View>
-
         </View>
     );
 };
 
- const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-      width: "100%",
+        width: '100%',
     },
     userName: {
         fontFamily: FONT.regular,
@@ -30,9 +29,9 @@ const Welcome = ({ userDetails }) => {
         marginTop: 2,
     },
     searchContainer: {
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
         marginTop: SIZES.large,
         height: 50,
     },
@@ -40,34 +39,34 @@ const Welcome = ({ userDetails }) => {
         flex: 1,
         backgroundColor: COLORS.white,
         marginRight: SIZES.small,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: SIZES.medium,
-        height: "100%",
+        height: '100%',
     },
     searchInput: {
         fontFamily: FONT.regular,
-        width: "100%",
-        height: "100%",
+        width: '100%',
+        height: '100%',
         paddingHorizontal: SIZES.medium,
     },
     searchBtn: {
         width: 50,
-        height: "100%",
+        height: '100%',
         backgroundColor: COLORS.tertiary,
         borderRadius: SIZES.medium,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     searchBtnImage: {
-        width: "50%",
-        height: "50%",
+        width: '50%',
+        height: '50%',
         tintColor: COLORS.white,
     },
     tabsContainer: {
-        width: "100%",
+        width: '100%',
         marginTop: SIZES.medium,
-    }
+    },
 });
 
 export default Welcome;
