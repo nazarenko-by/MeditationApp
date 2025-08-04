@@ -1,22 +1,17 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
+import { COLORS, SIZES } from '../constants/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import ScreenHeaderBtn from '../components/ScreenHeaderBtn';
 import Welcome from '../components/Welcome';
 import PopularMeditation from '../components/PopularMeditation';
 import DailyMeditation from '../components/DailyMeditation';
-import DailyQuote from '../components/DailyQuote';
-
-import { COLORS, SIZES } from '../constants/theme';
+import { useTheme } from '../context/ThemeProvider';
 
 const Home = () => {
     const [userDetails, setUserDetails] = useState(null);
-    console.log('0', ScreenHeaderBtn);
 
     useEffect(() => {
-        console.log(1);
-
         loadUserDetails();
     }, []);
 
@@ -25,24 +20,34 @@ const Home = () => {
         console.log('user', user);
         setUserDetails(user);
     };
+    const { theme, toggleTheme } = useTheme();
+    console.log('theme', theme);
+
+    const isDarkMode = theme === 'dark';
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
-            <ScreenHeaderBtn />
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View
-                    style={{
-                        flex: 1,
-                        padding: SIZES.medium,
-                    }}
-                    testID="screensDisplay"
-                >
-                    <Welcome userDetails={userDetails ? JSON.parse(userDetails) : null} />
-                    <DailyQuote />
-                    <PopularMeditation />
-                    <DailyMeditation />
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+        <>
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    backgroundColor: isDarkMode ? COLORS.darkBackground : COLORS.lightWhite,
+                }}
+            >
+                <ScreenHeaderBtn />
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View
+                        style={{
+                            flex: 1,
+                            padding: SIZES.medium,
+                        }}
+                        testID="screensDisplay"
+                    >
+                        <Welcome userDetails={userDetails ? JSON.parse(userDetails) : null} isDarkMode={isDarkMode} />
+                        <PopularMeditation isDarkMode={isDarkMode} />
+                        <DailyMeditation isDarkMode={isDarkMode} />
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        </>
     );
 };
 
