@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
 		marginVertical: SIZES.small,
 	},
 	description: { color: COLORS.lightWhite, fontWeight: "bold" },
-	date: { color: COLORS.darkText, fontSize: SIZES.small },
+	date: { color: COLORS.lightText, fontSize: SIZES.small },
 	input: { borderColor: COLORS.primary, borderWidth: 1, padding: SIZES.small, marginVertical: SIZES.small },
 	selected: { fontSize: SIZES.medium, marginVertical: SIZES.small, color: COLORS.primary },
 	button: {
